@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CrisisComm: 72-Hour Response Simulator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    .fade-in { animation: fadeIn 0.25s ease-in-out; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+
+  <!-- Top Navigation & Live Metrics Bar -->
+  <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+      <!-- Brand -->
+      <div class="flex items-center gap-3">
+        <div class="bg-amber-500 text-slate-950 w-10 h-10 rounded-lg flex items-center justify-center font-extrabold text-xl shadow-lg shadow-amber-500/20">
+          <i class="fa-solid fa-tower-broadcast"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-bold text-lg tracking-tight text-white">CrisisComm</h1>
+            <span class="text-xs font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/15 text-amber-400 border border-amber-500/30">72-Hr Sim</span>
+          </div>
+          <p class="text-xs text-slate-400">Incident: St. Lawrence Corridor Water & Grid Failure</p>
+        </div>
+      </div>
+
+      <!-- Program Lens Selector (Cross-Disciplinary Hook) -->
+      <div class="flex items-center gap-2 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700">
+        <label for="program-select" class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Program Lens:</label>
+        <select id="program-select" onchange="updateProgramLens()" class="bg-transparent text-sm font-semibold text-amber-400 focus:outline-none cursor-pointer">
+          <option value="all" class="bg-slate-900">All Programs (Task Force Lead)</option>
+          <option value="health" class="bg-slate-900">Pre-Health / Nursing</option>
+          <option value="trades" class="bg-slate-900">Trades & Technical</option>
+          <option value="justice" class="bg-slate-900">Justice & Public Safety</option>
+          <option value="business" class="bg-slate-900">Business & Operations</option>
+        </select>
+      </div>
+
+      <!-- Gamification HUD -->
+      <div class="flex items-center gap-5">
+        <!-- Trust Meter -->
+        <div class="w-40">
+          <div class="flex justify-between text-xs font-semibold mb-1">
+            <span class="text-slate-400">Public Trust</span>
+            <span id="trust-value" class="text-emerald-400">62%</span>
+          </div>
+          <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden border border-slate-700">
+            <div id="trust-bar" class="h-full bg-emerald-500 transition-all duration-500" style="width: 62%"></div>
+          </div>
+        </div>
+
+        <!-- XP & Rank -->
+        <div class="text-right">
+          <div class="text-xs font-semibold text-slate-400">Rank: <span id="rank-label" class="text-indigo-400">Field Responder</span></div>
+          <div class="text-sm font-bold text-white"><span id="xp-value">150</span> <span class="text-xs font-normal text-slate-400">XP</span></div>
+        </div>
+
+        <!-- Presenter / Chair Mode Toggle -->
+        <button onclick="togglePresenterModal()" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition flex items-center gap-1.5 shadow-md shadow-indigo-600/20">
+          <i class="fa-solid fa-chalkboard-user"></i> Chair / Presenter View
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Workspace -->
+  <main class="max-w-7xl mx-auto w-full px-4 py-6 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+    <!-- Left Sidebar: Mission Briefing, Program Context & Badges -->
+    <aside class="lg:col-span-4 space-y-5">
+      <!-- Dynamic Program Lens Card -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-lg">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-bold uppercase tracking-wider text-amber-400">Active Role Briefing</span>
+          <span class="text-xs text-slate-500">Hour 14 of 72</span>
+        </div>
+        <h2 id="role-title" class="text-base font-bold text-white mb-2">Cross-Functional Communications Lead</h2>
+        <p id="role-desc" class="text-sm text-slate-300 leading-relaxed">
+          A regional ice storm knocked out the primary water treatment substation and downed feeder lines. Misinformation is spreading online. Your job is to translate technical field updates into clear, calm action steps for the public and leadership.
+        </p>
+      </div>
+
+      <!-- Mission Navigation -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-lg">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 px-1">Active Comm Modules</h3>
+        <div class="space-y-2">
+          <button onclick="switchTab('email')" id="tab-email" class="w-full text-left p-3 rounded-lg border transition flex items-center justify-between bg-slate-800/90 border-amber-500/60 text-white">
+            <div class="flex items-center gap-3">
+              <span class="w-7 h-7 rounded-md bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-bold">1</span>
+              <div>
