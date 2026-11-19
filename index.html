@@ -22,16 +22,16 @@
   <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-30">
     <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
       <!-- Brand -->
-      <div class="flex items-center gap-3">
-        <div class="bg-amber-500 text-slate-950 w-10 h-10 rounded-lg flex items-center justify-center font-extrabold text-xl shadow-lg shadow-amber-500/20">
+      <div class="flex items-center gap-3 min-w-0">
+        <div class="bg-amber-500 text-slate-950 w-10 h-10 rounded-lg flex items-center justify-center font-extrabold text-xl shadow-lg shadow-amber-500/20 shrink-0">
           <i class="fa-solid fa-tower-broadcast"></i>
         </div>
-        <div>
+        <div class="min-w-0">
           <div class="flex items-center gap-2">
             <h1 class="font-bold text-lg tracking-tight text-white">CrisisComm</h1>
             <span class="text-xs font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/15 text-amber-400 border border-amber-500/30">72-Hr Sim</span>
           </div>
-          <p class="text-xs text-slate-400">Incident: St. Lawrence Corridor Water & Grid Failure</p>
+          <p class="text-xs text-slate-400 truncate">Incident: St. Lawrence Corridor Water & Grid Failure</p>
         </div>
       </div>
 
@@ -78,7 +78,7 @@
   <main class="max-w-7xl mx-auto w-full px-4 py-6 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6">
 
     <!-- Left Sidebar: Mission Briefing, Program Context & Badges -->
-    <aside class="lg:col-span-4 space-y-5">
+    <aside class="lg:col-span-4 min-w-0 space-y-5">
       <!-- Dynamic Program Lens Card -->
       <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-lg">
         <div class="flex items-center justify-between mb-2">
@@ -95,7 +95,430 @@
       <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-lg">
         <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 px-1">Active Comm Modules</h3>
         <div class="space-y-2">
-          <button onclick="switchTab('email')" id="tab-email" class="w-full text-left p-3 rounded-lg border transition flex items-center justify-between bg-slate-800/90 border-amber-500/60 text-white">
-            <div class="flex items-center gap-3">
-              <span class="w-7 h-7 rounded-md bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-bold">1</span>
+          <button onclick="switchTab('email')" id="tab-email" class="w-full text-left p-3 rounded-lg border transition flex items-center justify-between gap-2 bg-slate-800/90 border-amber-500/60 text-white">
+            <div class="flex items-center gap-3 min-w-0">
+              <span class="w-7 h-7 rounded-md bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-bold shrink-0">1</span>
+              <div class="min-w-0">
+                <div class="text-sm font-semibold truncate">High-Stakes Email</div>
+                <div class="text-xs text-slate-400 truncate">Audience, Tone & Plain Language</div>
+              </div>
+            </div>
+            <span id="status-email" class="text-xs font-semibold text-amber-400 shrink-0">Active</span>
+          </button>
+
+          <button onclick="switchTab('sources')" id="tab-sources" class="w-full text-left p-3 rounded-lg border border-slate-800 hover:bg-slate-800/50 transition flex items-center justify-between gap-2 text-slate-300">
+            <div class="flex items-center gap-3 min-w-0">
+              <span class="w-7 h-7 rounded-md bg-slate-800 text-slate-400 flex items-center justify-center text-xs font-bold shrink-0">2</span>
+              <div class="min-w-0">
+                <div class="text-sm font-semibold truncate">Source Evaluation</div>
+                <div class="text-xs text-slate-400 truncate">Verify Field Intel & Rumors</div>
+              </div>
+            </div>
+            <span id="status-sources" class="text-xs font-semibold text-slate-500 shrink-0">Pending</span>
+          </button>
+
+          <button onclick="switchTab('memo')" id="tab-memo" class="w-full text-left p-3 rounded-lg border border-slate-800 hover:bg-slate-800/50 transition flex items-center justify-between gap-2 text-slate-300">
+            <div class="flex items-center gap-3 min-w-0">
+              <span class="w-7 h-7 rounded-md bg-slate-800 text-slate-400 flex items-center justify-center text-xs font-bold shrink-0">3</span>
+              <div class="min-w-0">
+                <div class="text-sm font-semibold truncate">Executive Memo</div>
+                <div class="text-xs text-slate-400 truncate">Bottom-Line-Up-Front Briefing</div>
+              </div>
+            </div>
+            <span id="status-memo" class="text-xs font-semibold text-slate-500 shrink-0">Pending</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Earned Badges -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-lg">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Competency Badges</h3>
+        <div class="grid grid-cols-3 gap-2 text-center">
+          <div id="badge-email" class="p-2.5 rounded-lg bg-slate-950 border border-slate-800 opacity-40 transition">
+            <i class="fa-solid fa-scissors text-amber-400 text-lg mb-1"></i>
+            <div class="text-[11px] font-semibold text-slate-200">Jargon Slayer</div>
+          </div>
+          <div id="badge-sources" class="p-2.5 rounded-lg bg-slate-950 border border-slate-800 opacity-40 transition">
+            <i class="fa-solid fa-shield-halved text-emerald-400 text-lg mb-1"></i>
+            <div class="text-[11px] font-semibold text-slate-200">Fact Sentinel</div>
+          </div>
+          <div id="badge-memo" class="p-2.5 rounded-lg bg-slate-950 border border-slate-800 opacity-40 transition">
+            <i class="fa-solid fa-file-signature text-indigo-400 text-lg mb-1"></i>
+            <div class="text-[11px] font-semibold text-slate-200">BLUF Master</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Right Main Panel: Interactive Task Arena -->
+    <section class="lg:col-span-8 min-w-0">
+
+      <!-- MISSION 1: HIGH-STAKES EMAIL -->
+      <div id="panel-email" class="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-xl fade-in">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-4 mb-5">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-400">Mission 1 of 3 • Audience & Clarity</span>
+            <h2 class="text-xl font-bold text-white mt-0.5">Rewrite the Panicked Boil-Water Notice</h2>
+          </div>
+          <button onclick="autoDemoEmail()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-semibold text-amber-400 transition">
+            <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Auto-Fill Demo Solution
+          </button>
+        </div>
+
+        <!-- Incoming Jargon Box -->
+        <div class="bg-slate-950 border border-slate-800 rounded-lg p-4 mb-5">
+          <div class="text-xs font-bold text-rose-400 uppercase tracking-wider mb-1">Raw Engineering Dispatch (Do Not Send As-Is):</div>
+          <p class="text-xs text-slate-400 leading-relaxed font-mono">
+            "Due to SCADA telemetry loss at Booster Station 4 and subsequent depressurization below 20 psi in Zones A-C, potential pathogen intrusion cannot be ruled out. Residents must subject all potable H2O intended for ingestion or oral hygiene to a rolling thermal boil >= 100°C for a minimum duration of 60 seconds prior to cooling."
+          </p>
+        </div>
+
+        <!-- Student Editor -->
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Subject Line (Must state clear action + affected area)</label>
+            <input id="email-subject" type="text" placeholder="e.g., URGENT: Boil Tap Water Before Drinking (Zones A–C)" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3.5 py-2 text-sm text-white focus:border-amber-500 focus:outline-none" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Public Email Body (Target: Plain language, scannable bullets, calm tone)</label>
+            <textarea id="email-body" rows="5" placeholder="Write a clear message telling residents what happened, how long to boil water (1 minute), and what it's safe to use for..." class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3.5 text-sm text-white focus:border-amber-500 focus:outline-none"></textarea>
+          </div>
+
+          <div class="flex items-center justify-between pt-2">
+            <span class="text-xs text-slate-400">Rubric checks: Plain language, specific boil time (1 min), zero jargon.</span>
+            <button onclick="evaluateEmail()" class="px-5 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm transition shadow-lg shadow-amber-500/20">
+              Run Clarity Check & Send
+            </button>
+          </div>
+        </div>
+
+        <!-- Feedback Output -->
+        <div id="email-feedback" class="hidden mt-5 p-4 rounded-lg border text-sm"></div>
+      </div>
+
+      <!-- MISSION 2: SOURCE EVALUATION -->
+      <div id="panel-sources" class="hidden bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-xl fade-in">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-4 mb-5">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Mission 2 of 3 • Information Literacy</span>
+            <h2 class="text-xl font-bold text-white mt-0.5">Triage Incoming Intel Before Press Briefing</h2>
+          </div>
+          <button onclick="autoDemoSources()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-semibold text-emerald-400 transition">
+            <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Auto-Select Demo Triage
+          </button>
+        </div>
+
+        <p class="text-sm text-slate-300 mb-4">Three reports just hit the command desk. Classify each source before deciding whether to include it in the 2:00 PM public update.</p>
+
+        <div class="space-y-4">
+          <!-- Source A -->
+          <div class="bg-slate-950 border border-slate-800 rounded-lg p-4">
+            <div class="flex justify-between items-start gap-4 mb-2">
               <div>
+                <span class="text-xs font-bold text-slate-400">INTEL #1 • Viral Social Media Post (@LocalWatch99)</span>
+                <p class="text-sm text-slate-200 mt-1">"My cousin works at the plant and says chemical tanks leaked into the river! Buy bottled water NOW before shelves empty!!"</p>
+              </div>
+              <select id="src-1" class="bg-slate-900 border border-slate-700 rounded px-2.5 py-1.5 text-xs font-semibold text-white">
+                <option value="">-- Classify --</option>
+                <option value="publish">Verified: Publish Immediately</option>
+                <option value="reject">Unverified Rumor: Reject & Debunk</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Source B -->
+          <div class="bg-slate-950 border border-slate-800 rounded-lg p-4">
+            <div class="flex justify-between items-start gap-4 mb-2">
+              <div>
+                <span class="text-xs font-bold text-slate-400">INTEL #2 • Eastern Ontario Health Unit Bulletin (Signed by Chief Medical Officer)</span>
+                <p class="text-sm text-slate-200 mt-1">"Routine turbidity testing confirms no chemical contamination. Boil advisory remains strictly precautionary due to pressure drop."</p>
+              </div>
+              <select id="src-2" class="bg-slate-900 border border-slate-700 rounded px-2.5 py-1.5 text-xs font-semibold text-white">
+                <option value="">-- Classify --</option>
+                <option value="publish">Verified: Publish Immediately</option>
+                <option value="reject">Unverified Rumor: Reject & Debunk</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Source C -->
+          <div class="bg-slate-950 border border-slate-800 rounded-lg p-4">
+            <div class="flex justify-between items-start gap-4 mb-2">
+              <div>
+                <span class="text-xs font-bold text-slate-400">INTEL #3 • Undated PDF Blog Forwarded via WhatsApp</span>
+                <p class="text-sm text-slate-200 mt-1">"2019 Engineering Study shows municipal pipes in Eastern Ontario contain heavy metals when depressurized."</p>
+              </div>
+              <select id="src-3" class="bg-slate-900 border border-slate-700 rounded px-2.5 py-1.5 text-xs font-semibold text-white">
+                <option value="">-- Classify --</option>
+                <option value="publish">Verified: Publish Immediately</option>
+                <option value="reject">Outdated / Misapplied: Hold & Verify</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-end mt-5">
+          <button onclick="evaluateSources()" class="px-5 py-2.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm transition shadow-lg shadow-emerald-500/20">
+            Verify Intel & Lock Briefing
+          </button>
+        </div>
+
+        <div id="sources-feedback" class="hidden mt-5 p-4 rounded-lg border text-sm"></div>
+      </div>
+
+      <!-- MISSION 3: EXECUTIVE MEMO -->
+      <div id="panel-memo" class="hidden bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-xl fade-in">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-4 mb-5">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-400">Mission 3 of 3 • Workplace Document Structure</span>
+            <h2 class="text-xl font-bold text-white mt-0.5">Executive Decision Memo to City Manager</h2>
+          </div>
+          <button onclick="autoDemoMemo()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-semibold text-indigo-400 transition">
+            <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Auto-Assemble Demo Memo
+          </button>
+        </div>
+
+        <p class="text-sm text-slate-300 mb-4">Leadership has 45 seconds between emergency calls. Assemble a crisp <strong>Bottom-Line-Up-Front (BLUF)</strong> memo requesting emergency potable water tankers.</p>
+
+        <div class="bg-slate-950 border border-slate-800 rounded-lg p-5 space-y-4 font-mono text-xs">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 border-b border-slate-800 pb-3">
+            <div><span class="text-slate-500">TO:</span> <span class="text-slate-200">M. Vance, Director of Emergency Operations</span></div>
+            <div><span class="text-slate-500">DATE:</span> <span class="text-slate-200">November 19, 2026</span></div>
+            <div><span class="text-slate-500">FROM:</span> <span class="text-slate-200">Regional Response Task Force</span></div>
+            <div><span class="text-slate-500">SUBJECT:</span> <span class="text-amber-400">ACTION REQUIRED: Deploy 4 Water Tankers by 18:00</span></div>
+          </div>
+
+          <div>
+            <label class="block text-indigo-400 font-bold mb-1">1. OPENING RECOMMENDATION (BLUF — Choose strongest opening):</label>
+            <select id="memo-bluf" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-slate-200 font-sans text-sm">
+              <option value="">-- Select Opening Sentence --</option>
+              <option value="weak">Yesterday evening at approximately 21:14 hours, weather conditions deteriorated significantly across the St. Lawrence corridor...</option>
+              <option value="strong">Approve $14,500 to deploy four potable water tankers to Zone B community centres by 18:00 today to prevent hospital dehydration overflow.</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-indigo-400 font-bold mb-1">2. KEY OPERATIONAL FACTS (Concise bullets for decision-makers):</label>
+            <textarea id="memo-facts" rows="3" placeholder="- Booster Station 4 pressure remains below 20 psi until at least 08:00 tomorrow..." class="w-full bg-slate-900 border border-slate-700 rounded p-2.5 text-slate-200 font-sans text-sm focus:border-indigo-500 focus:outline-none"></textarea>
+          </div>
+        </div>
+
+        <div class="flex justify-end mt-5">
+          <button onclick="evaluateMemo()" class="px-5 py-2.5 rounded-lg bg-indigo-500 hover:bg-indigo-400 text-white font-bold text-sm transition shadow-lg shadow-indigo-500/20">
+            Submit Memo to Command
+          </button>
+        </div>
+
+        <div id="memo-feedback" class="hidden mt-5 p-4 rounded-lg border text-sm"></div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Presenter / Department Chair Modal -->
+  <div id="presenter-modal" class="hidden fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-2xl w-full p-6 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-4">
+        <div class="flex items-center gap-2.5">
+          <i class="fa-solid fa-graduation-cap text-indigo-400 text-xl"></i>
+          <h3 class="text-lg font-bold text-white">Curriculum & Pedagogical Alignment</h3>
+        </div>
+        <button onclick="togglePresenterModal()" class="text-slate-400 hover:text-white text-lg">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="space-y-4 text-sm text-slate-300 leading-relaxed">
+        <p><strong class="text-white">Why this works across programs:</strong> Instead of generic prompts, the <em>Program Lens</em> dynamically frames identical communication outcomes around the actual workplace stakes students face in Health, Trades, Justice, and Business.</p>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+          <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800">
+            <div class="text-amber-400 font-bold text-xs uppercase mb-1">Outcome 1: Email</div>
+            <p class="text-xs text-slate-400">Tests audience adaptation, plain-language translation, and de-escalation under pressure.</p>
+          </div>
+          <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800">
+            <div class="text-emerald-400 font-bold text-xs uppercase mb-1">Outcome 2: Sources</div>
+            <p class="text-xs text-slate-400">Trains rapid credibility verification and lateral reading before amplifying workplace claims.</p>
+          </div>
+          <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800">
+            <div class="text-indigo-400 font-bold text-xs uppercase mb-1">Outcome 3: Memo</div>
+            <p class="text-xs text-slate-400">Enforces Bottom-Line-Up-Front (BLUF) executive structure and scannable decision formatting.</p>
+          </div>
+        </div>
+
+        <p class="text-xs text-slate-400 pt-2 border-t border-slate-800">
+          <strong class="text-slate-200">Deployment Footprint:</strong> Zero-cost static HTML/JS bundle. Embeds directly into LMS modules (Brightspace/Canvas) via iFrame or runs standalone via GitHub Pages with zero student login friction.
+        </p>
+      </div>
+
+      <div class="mt-6 flex justify-end">
+        <button onclick="togglePresenterModal()" class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold">
+          Return to Simulation
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let state = {
+      trust: 62,
+      xp: 150,
+      completed: { email: false, sources: false, memo: false }
+    };
+
+    const programContexts = {
+      all: {
+        title: "Cross-Functional Communications Lead",
+        desc: "A regional ice storm knocked out the primary water treatment substation and downed feeder lines. Misinformation is spreading online. Translate technical field updates into clear, calm action steps."
+      },
+      health: {
+        title: "Public Health & Clinic Triage Coordinator",
+        desc: "Local urgent care clinics are seeing anxious residents asking if tap water is safe for infant formula and wound care. Translate epidemiological boil-water protocols into calm, zero-jargon patient guidance."
+      },
+      trades: {
+        title: "Field Operations & Utility Site Supervisor",
+        desc: "Your crew is repairing Booster Station 4 while pressure drops across Zones A–C. Bridge the gap between technical SCADA diagnostics and clear safety updates for non-technical managers and residents."
+      },
+      justice: {
+        title: "Emergency Dispatch & Community Liaison",
+        desc: "Rumors of chemical contamination are causing panic-buying at local stores. Issue verified public safety updates that de-escalate crowd anxiety and keep emergency lines clear."
+      },
+      business: {
+        title: "Regional Supply Chain & Operations Manager",
+        desc: "Water restrictions and power flickers threaten local food vendors and care facilities. Coordinate stakeholder memos and justify emergency logistics budgets to executive leadership."
+      }
+    };
+
+    function updateProgramLens() {
+      const val = document.getElementById('program-select').value;
+      document.getElementById('role-title').textContent = programContexts[val].title;
+      document.getElementById('role-desc').textContent = programContexts[val].desc;
+    }
+
+    function switchTab(tab) {
+      ['email', 'sources', 'memo'].forEach(t => {
+        document.getElementById(`panel-${t}`).classList.add('hidden');
+        const btn = document.getElementById(`tab-${t}`);
+        btn.classList.remove('bg-slate-800/90', 'border-amber-500/60', 'text-white');
+        btn.classList.add('border-slate-800', 'text-slate-300');
+      });
+      document.getElementById(`panel-${tab}`).classList.remove('hidden');
+      const activeBtn = document.getElementById(`tab-${tab}`);
+      activeBtn.classList.add('bg-slate-800/90', 'border-amber-500/60', 'text-white');
+      activeBtn.classList.remove('border-slate-800', 'text-slate-300');
+    }
+
+    function updateHUD(trustDelta, xpDelta) {
+      state.trust = Math.min(100, Math.max(0, state.trust + trustDelta));
+      state.xp += xpDelta;
+      document.getElementById('trust-value').textContent = `${state.trust}%`;
+      document.getElementById('trust-bar').style.width = `${state.trust}%`;
+      document.getElementById('xp-value').textContent = state.xp;
+
+      if (state.xp >= 450) document.getElementById('rank-label').textContent = "Crisis Comms Director";
+      else if (state.xp >= 300) document.getElementById('rank-label').textContent = "Senior Strategist";
+    }
+
+    // Mission 1: Email
+    function autoDemoEmail() {
+      document.getElementById('email-subject').value = "URGENT: Boil Tap Water Before Drinking (Zones A, B & C)";
+      document.getElementById('email-body').value = "Due to a power outage at Booster Station 4, tap water pressure has dropped in Zones A, B, and C. Until further notice, please bring all tap water to a rolling boil for 1 full minute before drinking, brushing teeth, or preparing food.\n\n• Safe to use: Showering and laundry (avoid swallowing water).\n• Next update: Today at 6:00 PM on the municipal portal.";
+    }
+
+    function evaluateEmail() {
+      const subj = document.getElementById('email-subject').value.toLowerCase();
+      const body = document.getElementById('email-body').value.toLowerCase();
+      const fb = document.getElementById('email-feedback');
+      fb.classList.remove('hidden', 'bg-rose-950/60', 'border-rose-500/40', 'text-rose-200', 'bg-emerald-950/60', 'border-emerald-500/40', 'text-emerald-200');
+
+      const hasJargon = body.includes('scada') || body.includes('pathogen') || body.includes('potable h2o');
+      const hasTime = body.includes('1 minute') || body.includes('one minute') || body.includes('60 seconds');
+
+      if (!subj || body.length < 30) {
+        fb.classList.add('bg-rose-950/60', 'border-rose-500/40', 'text-rose-200');
+        fb.innerHTML = "<strong>Incomplete Draft:</strong> Add both a clear subject line and plain-language instructions before sending.";
+        return;
+      }
+
+      if (hasJargon || !hasTime) {
+        fb.classList.add('bg-rose-950/60', 'border-rose-500/40', 'text-rose-200');
+        fb.innerHTML = "<strong>Clarity Alert (-5% Trust):</strong> Watch out for engineering jargon (like SCADA or pathogens) or missing boil duration (1 minute). Simplify for anxious readers!";
+        updateHUD(-5, 10);
+      } else {
+        fb.classList.add('bg-emerald-950/60', 'border-emerald-500/40', 'text-emerald-200');
+        fb.innerHTML = "<strong>Sent! (+14% Public Trust, +150 XP):</strong> Clear subject line, zero jargon, and actionable boil time. You unlocked the <em>Jargon Slayer</em> badge!";
+        if (!state.completed.email) {
+          state.completed.email = true;
+          updateHUD(14, 150);
+          document.getElementById('badge-email').classList.remove('opacity-40');
+          document.getElementById('status-email').textContent = "Complete ✓";
+          document.getElementById('status-email').className = "text-xs font-semibold text-emerald-400";
+        }
+      }
+    }
+
+    // Mission 2: Sources
+    function autoDemoSources() {
+      document.getElementById('src-1').value = "reject";
+      document.getElementById('src-2').value = "publish";
+      document.getElementById('src-3').value = "reject";
+    }
+
+    function evaluateSources() {
+      const s1 = document.getElementById('src-1').value;
+      const s2 = document.getElementById('src-2').value;
+      const s3 = document.getElementById('src-3').value;
+      const fb = document.getElementById('sources-feedback');
+      fb.classList.remove('hidden', 'bg-rose-950/60', 'border-rose-500/40', 'text-rose-200', 'bg-emerald-950/60', 'border-emerald-500/40', 'text-emerald-200');
+
+      if (s1 === 'reject' && s2 === 'publish' && s3 === 'reject') {
+        fb.classList.add('bg-emerald-950/60', 'border-emerald-500/40', 'text-emerald-200');
+        fb.innerHTML = "<strong>Intel Verified! (+12% Trust, +150 XP):</strong> You blocked an anonymous social rumour and an outdated 2019 PDF while amplifying primary Health Unit data. <em>Fact Sentinel</em> badge unlocked!";
+        if (!state.completed.sources) {
+          state.completed.sources = true;
+          updateHUD(12, 150);
+          document.getElementById('badge-sources').classList.remove('opacity-40');
+          document.getElementById('status-sources').textContent = "Complete ✓";
+          document.getElementById('status-sources').className = "text-xs font-semibold text-emerald-400";
+        }
+      } else {
+        fb.classList.add('bg-rose-950/60', 'border-rose-500/40', 'text-rose-200');
+        fb.innerHTML = "<strong>Verification Hold:</strong> Check the dates and primary authority on each source. Never amplify anonymous social rumours or outdated PDFs in a live briefing.";
+      }
+    }
+
+    // Mission 3: Memo
+    function autoDemoMemo() {
+      document.getElementById('memo-bluf').value = "strong";
+      document.getElementById('memo-facts').value = "• Booster Station 4 pressure remains below 20 psi until 08:00 tomorrow.\n• Three senior care homes in Zone B require immediate potable water supply.\n• Vendor can stage 4 insulated tankers by 18:00 upon signature.";
+    }
+
+    function evaluateMemo() {
+      const bluf = document.getElementById('memo-bluf').value;
+      const facts = document.getElementById('memo-facts').value;
+      const fb = document.getElementById('memo-feedback');
+      fb.classList.remove('hidden', 'bg-rose-950/60', 'border-rose-500/40', 'text-rose-200', 'bg-emerald-950/60', 'border-emerald-500/40', 'text-emerald-200');
+
+      if (bluf === 'strong' && facts.trim().length > 25) {
+        fb.classList.add('bg-emerald-950/60', 'border-emerald-500/40', 'text-emerald-200');
+        fb.innerHTML = "<strong>Approved in 30 Seconds! (+12% Trust, +200 XP):</strong> Leading with the exact dollar ask and deadline allowed the Director to sign off immediately. <em>BLUF Master</em> badge unlocked!";
+        if (!state.completed.memo) {
+          state.completed.memo = true;
+          updateHUD(12, 200);
+          document.getElementById('badge-memo').classList.remove('opacity-40');
+          document.getElementById('status-memo').textContent = "Complete ✓";
+          document.getElementById('status-memo').className = "text-xs font-semibold text-emerald-400";
+        }
+      } else {
+        fb.classList.add('bg-rose-950/60', 'border-rose-500/40', 'text-rose-200');
+        fb.innerHTML = "<strong>Revision Needed:</strong> Executives don't have time for chronological storytelling. Put the exact decision/budget request in sentence one and list crisp supporting facts.";
+      }
+    }
+
+    function togglePresenterModal() {
+      document.getElementById('presenter-modal').classList.toggle('hidden');
+    }
+  </script>
+</body>
+</html>
